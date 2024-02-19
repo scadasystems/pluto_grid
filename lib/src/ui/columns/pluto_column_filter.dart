@@ -1,7 +1,9 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 import 'package:pluto_grid/pluto_grid.dart';
 
 import '../ui.dart';
@@ -12,9 +14,9 @@ class PlutoColumnFilter extends PlutoStatefulWidget {
   final PlutoColumn column;
 
   PlutoColumnFilter({
+    Key? key,
     required this.stateManager,
     required this.column,
-    Key? key,
   }) : super(key: ValueKey('column_filter_${column.key}'));
 
   @override
@@ -44,7 +46,7 @@ class PlutoColumnFilterState extends PlutoStateWithChange<PlutoColumnFilter> {
 
   InputBorder get _border => OutlineInputBorder(
         borderSide: BorderSide(color: stateManager.configuration.style.borderColor, width: 0.0),
-        borderRadius: BorderRadius.zero,
+        // borderRadius: BorderRadius.zero,
       );
 
   InputBorder get _enabledBorder => OutlineInputBorder(
@@ -243,6 +245,9 @@ class PlutoColumnFilterState extends PlutoStateWithChange<PlutoColumnFilter> {
               onEditingComplete: _handleOnEditingComplete,
               decoration: InputDecoration(
                 hintText: _enabled ? widget.column.defaultFilter.title : '',
+                hintStyle: const TextStyle(
+                  color: Colors.grey,
+                ),
                 filled: true,
                 fillColor: _textFieldColor,
                 border: _border,
