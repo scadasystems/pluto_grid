@@ -190,8 +190,11 @@ class PlutoPaginationState extends _PlutoPaginationStateWithChange {
     return TextStyle(
       fontSize: isCurrentIndex ? stateManager.configuration.style.iconSize : null,
       color: isCurrentIndex
-          ? widget.activateColor ?? stateManager.configuration.style.activatedBorderColor
+          ? widget.activateColor == Colors.transparent
+              ? null
+              : widget.activateColor ?? stateManager.configuration.style.activatedBorderColor
           : widget.deactivateColor ?? stateManager.configuration.style.iconColor,
+      fontWeight: FontWeight.bold,
     );
   }
 
