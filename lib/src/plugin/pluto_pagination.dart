@@ -16,6 +16,11 @@ class PlutoPagination extends PlutoStatefulWidget {
     this.padding = const EdgeInsets.all(0),
     this.activateColor,
     this.deactivateColor,
+    this.alignment = Alignment.center,
+    this.firstPageIcon,
+    this.beforePageIcon,
+    this.nextPageIcon,
+    this.lastPageIcon,
     super.key,
   }) : assert(pageSizeToMove == null || pageSizeToMove > 0);
 
@@ -32,6 +37,11 @@ class PlutoPagination extends PlutoStatefulWidget {
   final EdgeInsetsGeometry padding;
   final Color? activateColor;
   final Color? deactivateColor;
+  final AlignmentGeometry alignment;
+  final IconData? firstPageIcon;
+  final IconData? beforePageIcon;
+  final IconData? nextPageIcon;
+  final IconData? lastPageIcon;
 
   @override
   PlutoPaginationState createState() => PlutoPaginationState();
@@ -218,14 +228,14 @@ class PlutoPaginationState extends _PlutoPaginationStateWithChange {
             width: _maxWidth,
             height: stateManager.footerHeight,
             child: Align(
-              alignment: Alignment.center,
+              alignment: widget.alignment,
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
                     IconButton(
                       onPressed: _isFirstPage ? null : _firstPage,
-                      icon: const Icon(Icons.first_page),
+                      icon: Icon(widget.firstPageIcon ?? Icons.first_page),
                       color: iconColor,
                       disabledColor: disabledIconColor,
                       splashRadius: _iconSplashRadius,
@@ -233,7 +243,7 @@ class PlutoPaginationState extends _PlutoPaginationStateWithChange {
                     ),
                     IconButton(
                       onPressed: _isFirstPage ? null : _beforePage,
-                      icon: const Icon(Icons.navigate_before),
+                      icon: Icon(widget.beforePageIcon ?? Icons.navigate_before),
                       color: iconColor,
                       disabledColor: disabledIconColor,
                       splashRadius: _iconSplashRadius,
@@ -242,7 +252,7 @@ class PlutoPaginationState extends _PlutoPaginationStateWithChange {
                     ..._pageNumbers.map(_makeNumberButton).toList(growable: false),
                     IconButton(
                       onPressed: _isLastPage ? null : _nextPage,
-                      icon: const Icon(Icons.navigate_next),
+                      icon: Icon(widget.nextPageIcon ?? Icons.navigate_next),
                       color: iconColor,
                       disabledColor: disabledIconColor,
                       splashRadius: _iconSplashRadius,
@@ -250,7 +260,7 @@ class PlutoPaginationState extends _PlutoPaginationStateWithChange {
                     ),
                     IconButton(
                       onPressed: _isLastPage ? null : _lastPage,
-                      icon: const Icon(Icons.last_page),
+                      icon: Icon(widget.lastPageIcon ?? Icons.last_page),
                       color: iconColor,
                       disabledColor: disabledIconColor,
                       splashRadius: _iconSplashRadius,
