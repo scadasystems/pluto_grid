@@ -21,6 +21,7 @@ class PlutoPagination extends PlutoStatefulWidget {
     this.beforePageIcon,
     this.nextPageIcon,
     this.lastPageIcon,
+    this.onPageChanged,
     super.key,
   }) : assert(pageSizeToMove == null || pageSizeToMove > 0);
 
@@ -34,14 +35,32 @@ class PlutoPagination extends PlutoStatefulWidget {
   /// If this value is set to 1, the next previous page is moved by one page.
   final int? pageSizeToMove;
 
+  /// Set the padding of the pagination widget.
   final EdgeInsetsGeometry padding;
+
+  /// Set the color of the activated page number.
   final Color? activateColor;
+
+  /// Set the color of the deactivated page number.
   final Color? deactivateColor;
+
+  /// Set the alignment of the pagination widget.
   final AlignmentGeometry alignment;
+
+  /// Set the icon of the first page button.
   final IconData? firstPageIcon;
+
+  /// Set the icon of the before page button.
   final IconData? beforePageIcon;
+
+  /// Set the icon of the next page button.
   final IconData? nextPageIcon;
+
+  /// Set the icon of the last page button.
   final IconData? lastPageIcon;
+
+  /// Called when the page is changed.
+  final Function(int page)? onPageChanged;
 
   @override
   PlutoPaginationState createState() => PlutoPaginationState();
@@ -64,6 +83,8 @@ abstract class _PlutoPaginationStateWithChange extends PlutoStateWithChange<Plut
     totalPage = stateManager.totalPage;
 
     stateManager.setPage(page, notify: false);
+
+    widget.onPageChanged?.call(page);
 
     updateState(PlutoNotifierEventForceUpdate.instance);
   }
@@ -173,8 +194,10 @@ class PlutoPaginationState extends _PlutoPaginationStateWithChange {
     _movePage(totalPage);
   }
 
-  void _movePage(int page) {
-    stateManager.setPage(page);
+  void _movePage(int page, [bool notify = true]) {
+    stateManager.setPage(page, notify: notify);
+
+    widget.onPageChanged?.call(page);
   }
 
   ButtonStyle _getNumberButtonStyle(bool isCurrentIndex) {
@@ -204,9 +227,7 @@ class PlutoPaginationState extends _PlutoPaginationStateWithChange {
     var isCurrentIndex = page == pageFromIndex;
 
     return TextButton(
-      onPressed: () {
-        stateManager.setPage(pageFromIndex);
-      },
+      onPressed: () => _movePage(pageFromIndex),
       style: _getNumberButtonStyle(isCurrentIndex),
       child: Text(
         pageFromIndex.toString(),
