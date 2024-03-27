@@ -84,8 +84,6 @@ abstract class _PlutoPaginationStateWithChange extends PlutoStateWithChange<Plut
 
     stateManager.setPage(page, notify: false);
 
-    widget.onPageChanged?.call(page);
-
     updateState(PlutoNotifierEventForceUpdate.instance);
   }
 
