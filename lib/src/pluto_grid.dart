@@ -64,6 +64,7 @@ class PlutoGrid extends PlutoStatefulWidget {
     this.configuration = const PlutoGridConfiguration(),
     this.notifierFilterResolver,
     this.mode = PlutoGridMode.normal,
+    this.customLoadingWidget,
   }) : super(key: key);
 
   /// {@template pluto_grid_property_columns}
@@ -311,6 +312,9 @@ class PlutoGrid extends PlutoStatefulWidget {
   /// [PlutoGridMode.popup]
   /// {@macro pluto_grid_mode_popup}
   final PlutoGridMode mode;
+
+  /// CustomLoadingWidget
+  final Widget? customLoadingWidget;
 
   /// [setDefaultLocale] sets locale when [Intl] package is used in [PlutoGrid].
   ///
@@ -745,6 +749,7 @@ class PlutoGridState extends PlutoStateWithChange<PlutoGrid> {
                       indicatorColor: style.activatedBorderColor,
                       text: _stateManager.localeText.loadingText,
                       textStyle: style.cellTextStyle,
+                      customWidget: widget.customLoadingWidget,
                     ),
                   ),
 

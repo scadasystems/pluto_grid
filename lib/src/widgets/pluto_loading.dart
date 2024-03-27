@@ -9,6 +9,7 @@ class PlutoLoading extends StatelessWidget {
   final Color? indicatorColor;
   final String? text;
   final TextStyle? textStyle;
+  final Widget? customWidget;
 
   const PlutoLoading({
     this.level = PlutoGridLoadingLevel.grid,
@@ -16,11 +17,16 @@ class PlutoLoading extends StatelessWidget {
     this.indicatorColor,
     this.text,
     this.textStyle,
+    this.customWidget,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
+    if (customWidget != null) {
+      return customWidget!;
+    }
+
     switch (level) {
       case PlutoGridLoadingLevel.grid:
         return _GridLoading(
