@@ -23,10 +23,6 @@ class PlutoLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (customWidget != null) {
-      return customWidget!;
-    }
-
     switch (level) {
       case PlutoGridLoadingLevel.grid:
         return _GridLoading(
@@ -34,6 +30,7 @@ class PlutoLoading extends StatelessWidget {
           indicatorColor: indicatorColor,
           text: text,
           textStyle: textStyle,
+          customWidget: customWidget,
         );
       case PlutoGridLoadingLevel.rows:
         return LinearProgressIndicator(
@@ -55,12 +52,14 @@ class _GridLoading extends StatelessWidget {
     this.indicatorColor,
     this.text,
     this.textStyle,
+    this.customWidget,
   });
 
   final Color? backgroundColor;
   final Color? indicatorColor;
   final String? text;
   final TextStyle? textStyle;
+  final Widget? customWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -79,11 +78,12 @@ class _GridLoading extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              CircularProgressIndicator(
-                backgroundColor: backgroundColor ?? Colors.white,
-                color: indicatorColor ?? Colors.lightBlue,
-                strokeWidth: 2,
-              ),
+              customWidget ??
+                  CircularProgressIndicator(
+                    backgroundColor: backgroundColor ?? Colors.white,
+                    color: indicatorColor ?? Colors.lightBlue,
+                    strokeWidth: 2,
+                  ),
               const SizedBox(height: 10),
               Text(
                 text ?? 'Loading',
