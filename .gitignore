@@ -78,3 +78,4 @@ coverage/
 
 # FVM Support - https://fvm.app/
 .fvm/flutter_sdk
+demo/linux/flutter/ephemeral/.plugin_symlinks/url_launcher_linux
