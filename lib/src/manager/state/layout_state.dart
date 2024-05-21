@@ -174,9 +174,7 @@ mixin LayoutState implements IPlutoGridState {
       return 0;
     }
 
-    return _state._headerHeight == null
-        ? PlutoGridSettings.rowTotalHeight
-        : _state._headerHeight!;
+    return _state._headerHeight == null ? PlutoGridSettings.rowTotalHeight : _state._headerHeight!;
   }
 
   set headerHeight(double value) {
@@ -189,9 +187,7 @@ mixin LayoutState implements IPlutoGridState {
       return 0;
     }
 
-    return _state._footerHeight == null
-        ? PlutoGridSettings.rowTotalHeight
-        : _state._footerHeight!;
+    return _state._footerHeight == null ? PlutoGridSettings.rowTotalHeight : _state._footerHeight!;
   }
 
   set footerHeight(double value) {
@@ -204,9 +200,7 @@ mixin LayoutState implements IPlutoGridState {
       return 0;
     }
 
-    return _state._columnFooterHeight == null
-        ? PlutoGridSettings.rowTotalHeight
-        : _state._columnFooterHeight!;
+    return _state._columnFooterHeight == null ? PlutoGridSettings.rowTotalHeight : _state._columnFooterHeight!;
   }
 
   set columnFooterHeight(double value) {
@@ -214,16 +208,14 @@ mixin LayoutState implements IPlutoGridState {
   }
 
   @override
-  double get columnRowContainerHeight =>
-      maxHeight! - headerHeight - footerHeight;
+  double get columnRowContainerHeight => maxHeight! - headerHeight - footerHeight;
 
   @override
   double get rowContainerHeight => maxHeight! - rowsTopOffset - footerHeight;
 
   @override
   Offset? get gridGlobalOffset {
-    final RenderBox? gridRenderBox =
-        gridKey.currentContext?.findRenderObject() as RenderBox?;
+    final RenderBox? gridRenderBox = gridKey.currentContext?.findRenderObject() as RenderBox?;
 
     if (gridRenderBox == null) {
       return _state._gridGlobalOffset;
@@ -259,39 +251,31 @@ mixin LayoutState implements IPlutoGridState {
   PlutoGridLoadingLevel get loadingLevel => _state._loadingLevel;
 
   @override
-  bool get hasLeftFrozenColumns =>
-      refColumns.firstWhereOrNull((e) => e.frozen.isStart) != null;
+  bool get hasLeftFrozenColumns => refColumns.firstWhereOrNull((e) => e.frozen.isStart) != null;
 
   @override
-  bool get hasRightFrozenColumns =>
-      refColumns.firstWhereOrNull((e) => e.frozen.isEnd) != null;
+  bool get hasRightFrozenColumns => refColumns.firstWhereOrNull((e) => e.frozen.isEnd) != null;
 
   @override
   double get headerBottomOffset => maxHeight! - headerHeight;
 
   @override
-  double get footerTopOffset =>
-      maxHeight! - footerHeight - PlutoGridSettings.totalShadowLineWidth;
+  double get footerTopOffset => maxHeight! - footerHeight - PlutoGridSettings.totalShadowLineWidth;
 
   @override
-  double get columnHeight =>
-      showColumnTitle ? configuration.style.columnHeight : 0;
+  double get columnHeight => showColumnTitle ? configuration.style.columnHeight : 0;
 
   @override
-  double get columnGroupHeight =>
-      showColumnGroups ? columnGroupDepth(columnGroups) * columnHeight : 0;
+  double get columnGroupHeight => showColumnGroups ? columnGroupDepth(columnGroups) * columnHeight : 0;
 
   @override
-  double get columnFilterHeight =>
-      showColumnFilter ? configuration.style.columnFilterHeight : 0;
+  double get columnFilterHeight => showColumnFilter ? configuration.style.columnFilterHeight : 0;
 
   @override
-  double get columnBottomOffset =>
-      maxHeight! - rowsTopOffset - PlutoGridSettings.totalShadowLineWidth;
+  double get columnBottomOffset => maxHeight! - rowsTopOffset - PlutoGridSettings.totalShadowLineWidth;
 
   @override
-  double get rowsTopOffset =>
-      headerHeight + columnGroupHeight + columnHeight + columnFilterHeight;
+  double get rowsTopOffset => headerHeight + columnGroupHeight + columnHeight + columnFilterHeight;
 
   @override
   double get rowHeight => configuration.style.rowHeight;
@@ -333,8 +317,7 @@ mixin LayoutState implements IPlutoGridState {
 
   @override
   double get bodyRightScrollOffset {
-    return (gridGlobalOffset!.dx + maxWidth!) -
-        PlutoGridSettings.offsetScrollingFromEdge;
+    return (gridGlobalOffset!.dx + maxWidth!) - PlutoGridSettings.offsetScrollingFromEdge;
   }
 
   @override
@@ -353,15 +336,11 @@ mixin LayoutState implements IPlutoGridState {
 
   @override
   double get leftFrozenRightOffset =>
-      maxWidth! -
-      leftFrozenColumnsWidth -
-      PlutoGridSettings.totalShadowLineWidth;
+      (maxWidth ?? 0.0) - leftFrozenColumnsWidth - PlutoGridSettings.totalShadowLineWidth;
 
   @override
   double get rightFrozenLeftOffset =>
-      maxWidth! -
-      rightFrozenColumnsWidth -
-      PlutoGridSettings.totalShadowLineWidth;
+      (maxWidth ?? 0.0) - rightFrozenColumnsWidth - PlutoGridSettings.totalShadowLineWidth;
 
   @override
   double get rightBlankOffset =>
@@ -376,10 +355,8 @@ mixin LayoutState implements IPlutoGridState {
     double offset = 0;
 
     if (showFrozenColumn) {
-      offset +=
-          leftFrozenColumnsWidth > 0 ? PlutoGridSettings.gridBorderWidth : 0;
-      offset +=
-          rightFrozenColumnsWidth > 0 ? PlutoGridSettings.gridBorderWidth : 0;
+      offset += leftFrozenColumnsWidth > 0 ? PlutoGridSettings.gridBorderWidth : 0;
+      offset += rightFrozenColumnsWidth > 0 ? PlutoGridSettings.gridBorderWidth : 0;
     }
 
     return offset;
@@ -403,8 +380,7 @@ mixin LayoutState implements IPlutoGridState {
       firstLayout: firstLayout,
       changedSize: changedSize,
     );
-    final bool updateVisibility =
-        changedShowFrozen || firstLayout || changedSize;
+    final bool updateVisibility = changedShowFrozen || firstLayout || changedSize;
     final bool notifyResizing = !firstLayout && changedSize;
 
     if (updateVisibility) updateVisibilityLayout();
@@ -475,8 +451,7 @@ mixin LayoutState implements IPlutoGridState {
 
   @override
   bool shouldShowFrozenColumns(double width) {
-    final bool hasFrozenColumn =
-        leftFrozenColumns.isNotEmpty || rightFrozenColumns.isNotEmpty;
+    final bool hasFrozenColumn = leftFrozenColumns.isNotEmpty || rightFrozenColumns.isNotEmpty;
 
     return hasFrozenColumn && enoughFrozenColumnsWidth(width);
   }
@@ -529,12 +504,9 @@ mixin LayoutState implements IPlutoGridState {
   }) {
     final updateShowFrozen = firstLayout || changedSize;
 
-    final showFrozen = updateShowFrozen
-        ? shouldShowFrozenColumns(size.maxWidth)
-        : _state._showFrozenColumn!;
+    final showFrozen = updateShowFrozen ? shouldShowFrozenColumns(size.maxWidth) : _state._showFrozenColumn!;
 
-    final changedShowFrozen =
-        !firstLayout && _state._showFrozenColumn != showFrozen;
+    final changedShowFrozen = !firstLayout && _state._showFrozenColumn != showFrozen;
 
     _state._showFrozenColumn = showFrozen;
 

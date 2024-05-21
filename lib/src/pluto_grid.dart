@@ -423,9 +423,11 @@ class PlutoGridState extends PlutoStateWithChange<PlutoGrid> {
   void didUpdateWidget(covariant PlutoGrid oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    stateManager
-      ..setConfiguration(widget.configuration)
-      ..setGridMode(widget.mode);
+    try {
+      stateManager
+        ..setConfiguration(widget.configuration)
+        ..setGridMode(widget.mode);
+    } catch (_) {}
   }
 
   @override
